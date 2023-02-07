@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/minstance/MinstanceDebugPanel/MinstanceStatusList.gd" type="Script" id=1]
+[ext_resource path="res://addons/minstance/MinstanceDebugPanel/MinstanceStackFrames.gd" type="Script" id=2]
+[ext_resource path="res://addons/minstance/MinstanceDebugPanel/MinstanceStackVariables.gd" type="Script" id=3]
+[ext_resource path="res://addons/minstance/MinstanceDebugPanel/MinstanceRemoteTree.gd" type="Script" id=4]
+
+[node name="MinstanceDebugPanel" type="HSplitContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="."]
+margin_right = 314.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+
+[node name="MinstanceStatusList" type="Tree" parent="HSplitContainer2"]
+margin_right = 151.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+column_titles_visible = true
+allow_reselect = true
+hide_root = true
+select_mode = 1
+script = ExtResource( 1 )
+
+[node name="MinstanceRemoteTree" type="Tree" parent="HSplitContainer2"]
+margin_left = 163.0
+margin_right = 314.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 150, 0 )
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+margin_left = 326.0
+margin_right = 640.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+
+[node name="MinstanceStackFrames" type="Tree" parent="HSplitContainer"]
+margin_right = 151.0
+margin_bottom = 360.0
+rect_min_size = Vector2( 120, 0 )
+size_flags_horizontal = 3
+column_titles_visible = true
+hide_root = true
+select_mode = 1
+script = ExtResource( 2 )
+
+[node name="MinstanceStackVariables" type="Tree" parent="HSplitContainer"]
+margin_left = 163.0
+margin_right = 314.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+columns = 2
+hide_folding = true
+hide_root = true
+script = ExtResource( 3 )
+
+[connection signal="item_selected" from="HSplitContainer2/MinstanceStatusList" to="HSplitContainer2/MinstanceStatusList" method="_on_MinstanceStatusList_item_selected"]
+[connection signal="item_selected" from="HSplitContainer2/MinstanceRemoteTree" to="HSplitContainer2/MinstanceRemoteTree" method="_on_MinstanceRemoteTree_item_selected"]
+[connection signal="item_selected" from="HSplitContainer/MinstanceStackFrames" to="HSplitContainer/MinstanceStackFrames" method="_on_MinstanceStackFrames_item_selected"]
+[connection signal="cell_selected" from="HSplitContainer/MinstanceStackVariables" to="HSplitContainer/MinstanceStackVariables" method="_on_tree_cell_selected"]

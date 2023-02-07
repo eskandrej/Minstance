@@ -1,0 +1,195 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/minstance/MinstanceToolbar/MinstanceToolButton/MinstanceSettingsDialog/TabInstance.gd" type="Script" id=1]
+[ext_resource path="res://addons/minstance/MinstanceToolbar/MinstanceToolButton/MinstanceSettingsDialog/Theme.tres" type="Theme" id=2]
+
+[node name="Main Instance" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -258.0
+margin_bottom = -146.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_right = 378.0
+margin_bottom = 172.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 7
+columns = 2
+
+[node name="TitleLbl" type="Label" parent="GridContainer"]
+margin_top = 5.0
+margin_right = 125.0
+margin_bottom = 19.0
+text = "Title:"
+align = 2
+
+[node name="TitleLineEdit" type="LineEdit" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 132.0
+margin_right = 378.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Main Intance"
+
+[node name="ArgumentsLbl" type="Label" parent="GridContainer"]
+margin_top = 37.0
+margin_right = 125.0
+margin_bottom = 51.0
+text = "Arguments:"
+align = 2
+
+[node name="ArgumentsLineEdit" type="LineEdit" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 132.0
+margin_top = 32.0
+margin_right = 378.0
+margin_bottom = 56.0
+size_flags_horizontal = 3
+
+[node name="ColorIdentificationLbl" type="Label" parent="GridContainer"]
+margin_top = 67.0
+margin_right = 125.0
+margin_bottom = 81.0
+text = "Color identification:"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="GridContainer"]
+unique_name_in_owner = true
+margin_left = 132.0
+margin_top = 64.0
+margin_right = 378.0
+margin_bottom = 84.0
+size_flags_horizontal = 3
+color = Color( 0.129412, 0.811765, 0.12549, 1 )
+
+[node name="WindowPositionLbl2" type="Label" parent="GridContainer"]
+margin_top = 125.0
+margin_right = 125.0
+margin_bottom = 139.0
+text = "Window:"
+align = 2
+
+[node name="HBoxContainer" type="GridContainer" parent="GridContainer"]
+margin_left = 132.0
+margin_top = 92.0
+margin_right = 378.0
+margin_bottom = 172.0
+size_flags_horizontal = 4
+custom_constants/hseparation = 30
+columns = 2
+
+[node name="PositionLbl" type="Label" parent="GridContainer/HBoxContainer"]
+margin_right = 108.0
+margin_bottom = 14.0
+text = "Position"
+align = 1
+
+[node name="SizeLbl" type="Label" parent="GridContainer/HBoxContainer"]
+margin_left = 138.0
+margin_right = 246.0
+margin_bottom = 14.0
+text = "Size"
+align = 1
+
+[node name="WindowPositionPContainer" type="PanelContainer" parent="GridContainer/HBoxContainer"]
+margin_top = 18.0
+margin_right = 108.0
+margin_bottom = 80.0
+size_flags_horizontal = 4
+theme = ExtResource( 2 )
+
+[node name="VBoxContainer" type="GridContainer" parent="GridContainer/HBoxContainer/WindowPositionPContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 103.0
+margin_bottom = 57.0
+size_flags_horizontal = 4
+columns = 2
+
+[node name="XLbl" type="Label" parent="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 20.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "X:  "
+
+[node name="WindowPositionXSpinBox" type="SpinBox" parent="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer"]
+unique_name_in_owner = true
+margin_left = 24.0
+margin_right = 98.0
+margin_bottom = 24.0
+max_value = 10240.0
+
+[node name="YLbl" type="Label" parent="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer"]
+margin_top = 33.0
+margin_right = 20.0
+margin_bottom = 47.0
+text = "Y:"
+
+[node name="WindowPositionYSpinBox" type="SpinBox" parent="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer"]
+unique_name_in_owner = true
+margin_left = 24.0
+margin_top = 28.0
+margin_right = 98.0
+margin_bottom = 52.0
+max_value = 10240.0
+
+[node name="WindowsSizePContainer" type="PanelContainer" parent="GridContainer/HBoxContainer"]
+margin_left = 138.0
+margin_top = 18.0
+margin_right = 246.0
+margin_bottom = 80.0
+size_flags_horizontal = 4
+theme = ExtResource( 2 )
+
+[node name="VBoxContainer" type="GridContainer" parent="GridContainer/HBoxContainer/WindowsSizePContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 103.0
+margin_bottom = 57.0
+size_flags_horizontal = 3
+columns = 2
+
+[node name="XLbl" type="Label" parent="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 20.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+text = "X:  "
+
+[node name="WindowsSizeXSpinBox" type="SpinBox" parent="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer"]
+unique_name_in_owner = true
+margin_left = 24.0
+margin_right = 98.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+max_value = 10240.0
+
+[node name="YLbl" type="Label" parent="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer"]
+margin_top = 33.0
+margin_right = 20.0
+margin_bottom = 47.0
+size_flags_horizontal = 3
+text = "Y:"
+
+[node name="WindowsSizeYSpinBox" type="SpinBox" parent="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer"]
+unique_name_in_owner = true
+margin_left = 24.0
+margin_top = 28.0
+margin_right = 98.0
+margin_bottom = 52.0
+size_flags_horizontal = 3
+max_value = 10240.0
+
+[connection signal="text_changed" from="GridContainer/TitleLineEdit" to="." method="_on_TitleLineEdit_text_changed"]
+[connection signal="text_entered" from="GridContainer/TitleLineEdit" to="." method="_on_TitleLineEdit_text_entered"]
+[connection signal="text_changed" from="GridContainer/ArgumentsLineEdit" to="." method="_on_ArgumentsLineEdit_text_changed"]
+[connection signal="color_changed" from="GridContainer/ColorPickerButton" to="." method="_on_ColorPickerButton_color_changed"]
+[connection signal="value_changed" from="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer/WindowPositionXSpinBox" to="." method="_on_WindowPositionXSpinBox_value_changed"]
+[connection signal="value_changed" from="GridContainer/HBoxContainer/WindowPositionPContainer/VBoxContainer/WindowPositionYSpinBox" to="." method="_on_WindowPositionYSpinBox_value_changed"]
+[connection signal="value_changed" from="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer/WindowsSizeXSpinBox" to="." method="_on_WindowsSizeXSpinBox_value_changed"]
+[connection signal="value_changed" from="GridContainer/HBoxContainer/WindowsSizePContainer/VBoxContainer/WindowsSizeYSpinBox" to="." method="_on_WindowsSizeYSpinBox_value_changed"]

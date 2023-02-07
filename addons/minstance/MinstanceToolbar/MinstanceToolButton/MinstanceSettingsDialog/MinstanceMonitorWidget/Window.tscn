@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/minstance/MinstanceToolbar/MinstanceToolButton/MinstanceSettingsDialog/MinstanceMonitorWidget/Window.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.129412, 0.811765, 0.12549, 0 )
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.882353, 0.141176, 0.141176, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Window" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -69.6
+margin_top = -48.5
+margin_right = -46.6
+margin_bottom = -28.5
+mouse_filter = 1
+mouse_default_cursor_shape = 13
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+
+[connection signal="gui_input" from="." to="." method="_on_Window_gui_input"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/minstance/MinstanceToolbar/MinstanceToolButton/MinstanceSettingsDialog/MinstanceSettingsDialog.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/minstance/MinstanceToolbar/MinstanceToolButton/MinstanceToolButton.gd" type="Script" id=2]
+[ext_resource path="res://addons/minstance/Icons/Play_multiple.svg" type="Texture" id=3]
+
+[node name="Control" type="ToolButton"]
+margin_right = 28.0
+margin_bottom = 23.0
+focus_mode = 0
+button_mask = 3
+enabled_focus_mode = 0
+icon = ExtResource( 3 )
+script = ExtResource( 2 )
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+margin_right = 71.0
+margin_bottom = 38.0
+items = [ "Settings", null, 0, false, false, 0, 0, null, "", false ]
+
+[node name="MinstanceSettingsDialog" parent="." instance=ExtResource( 1 )]
+
+[connection signal="gui_input" from="." to="." method="_on_Control_gui_input"]
