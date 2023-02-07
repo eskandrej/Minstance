@@ -5,6 +5,7 @@ const Util = preload("../Util.gd")
 
 var minstance_tool_button: Button
 var instruction_popup: AcceptDialog
+var no_main_screen_popup: AcceptDialog
 var toolbar_buttons: Dictionary
 var minstance_main = null
 
@@ -13,20 +14,9 @@ func _init(p_minstance_main) -> void:
 	minstance_main.connect("status_changed", self, "_on_minstance_status_changed")
 	minstance_tool_button = MinstanceToolButton.instance()
 	
-	instruction_popup = AcceptDialog.new()
-	var i = TextureRect.new()
-	var v = VBoxContainer.new()
-	instruction_popup.add_child(v)
-	i.texture = load("res://addons/minstance/Icons/tut.png")
-	v.add_child(i)
-	i.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	instruction_popup.rect_min_size = Vector2(150,220)
-	instruction_popup.dialog_text = "There is no instance to run.\nAdd instance by right click on\nicon and click settings.\n"
+	instruction_popup = minstance_tool_button.get_node("InstructionPopup")
+	no_main_screen_popup = minstance_tool_button.get_node("NoMainScenePopup")
 
-
-	minstance_tool_button.add_child(instruction_popup)
-	
-	
 	minstance_main.add_control_to_container(EditorPlugin.CONTAINER_TOOLBAR, minstance_tool_button)
 	minstance_tool_button.get_parent().move_child(minstance_tool_button, 4)
 	minstance_tool_button.initialize(minstance_main)

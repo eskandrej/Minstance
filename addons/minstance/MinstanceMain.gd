@@ -97,6 +97,10 @@ func start() -> void:
 		minstance_toolbar.instruction_popup.popup_centered()
 		return
 		
+	if ProjectSettings.get_setting("application/run/main_scene").empty():
+		minstance_toolbar.no_main_screen_popup.popup_centered()
+		return
+		
 	self.active_instance = null
 	
 	minstance_outputs.show()
