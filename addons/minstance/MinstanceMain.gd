@@ -28,6 +28,7 @@ var debugger_port = 4567
 
 enum STATUS {NONE, STARTED, STOPPED, STOPPING}
 var status = STATUS.NONE setget set_status
+var object_id_selected_connection: Dictionary
 
 signal active_instance_changed(instance)
 signal status_changed(status)
@@ -62,9 +63,8 @@ func stop_all() -> void:
 		
 	self.status = STATUS.STOPPED
 	
-	var signal_object_id = get_editor_interface().get_inspector().get_signal_connection_list("object_id_selected")[0]
-	get_editor_interface().get_inspector().disconnect(signal_object_id.signal, signal_object_id.target, signal_object_id.method)
-	get_editor_interface().get_inspector().connect("object_id_selected", self, "_on_object_id_selected")
+	get_editor_interface().get_inspector().connect(object_id_selected_connection.signal, object_id_selected_connection.target, object_id_selected_connection.method)
+	get_editor_interface().get_inspector().disconnect("object_id_selected", self, "_on_object_id_selected")
 	
 func set_inspected_object(p_inspected_object: MinstanceRemote) -> void:
 	inspected_object = p_inspected_object
@@ -119,8 +119,8 @@ func start() -> void:
 		
 	self.status = STATUS.STARTED
 	
-	var signal_object_id = get_editor_interface().get_inspector().get_signal_connection_list("object_id_selected")[0]
-	get_editor_interface().get_inspector().disconnect(signal_object_id.signal, signal_object_id.target, signal_object_id.method)
+	object_id_selected_connection = get_editor_interface().get_inspector().get_signal_connection_list("object_id_selected")[0]
+	get_editor_interface().get_inspector().disconnect(object_id_selected_connection.signal, object_id_selected_connection.target, object_id_selected_connection.method)
 	get_editor_interface().get_inspector().connect("object_id_selected", self, "_on_object_id_selected")
 	
 func save_config() -> void:
