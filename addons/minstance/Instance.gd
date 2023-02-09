@@ -128,7 +128,6 @@ func _process (delta) -> void:
 							
 					"debug_enter":
 						if data: self.debug_msg = data[1]
-						output_log.add_message("Debug",0)
 						minstance_main.set_instances_sticky(false)
 						yield(get_tree(),"idle_frame")
 						OS.set_window_always_on_top(true)
