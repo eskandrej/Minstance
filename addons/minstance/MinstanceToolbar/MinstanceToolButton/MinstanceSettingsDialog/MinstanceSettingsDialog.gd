@@ -11,6 +11,7 @@ func _on_CloseBtn_pressed():
 	minstance_main.remember_window_position_size = $"%RemeberWinPosCheckBtn".pressed
 	minstance_main.save_breakpoints = $"%SaveBreakpointsBtn".pressed
 	minstance_main.remove_autoload_on_exit = $"%RemoveAutoloadOnExitBtn".pressed
+	minstance_main.close_all_instances_on_exit = $"%CloseAllInstancesOnExitBtn".pressed
 	hide()
 
 func add_instance(instance = null):
@@ -64,6 +65,7 @@ func popup_centered(pos = Vector2()):
 	$"%RemeberWinPosCheckBtn".pressed = minstance_main.remember_window_position_size
 	$"%SaveBreakpointsBtn".pressed =  minstance_main.save_breakpoints
 	$"%RemoveAutoloadOnExitBtn".pressed = minstance_main.remove_autoload_on_exit
+	$"%CloseAllInstancesOnExitBtn".pressed = minstance_main.close_all_instances_on_exit
 	
 func _on_VBoxContainer_resized():
 	rect_size.y = $VBoxContainer.rect_size.y
