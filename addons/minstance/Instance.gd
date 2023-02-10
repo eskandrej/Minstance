@@ -172,7 +172,13 @@ func _process (delta) -> void:
 		if _connection.get_status() == _connection.STATUS_NONE:
 			clear_connection()
 			stop()
-			minstance_main.stop_all()
+			if minstance_main.close_all_instances_on_exit:
+				minstance_main.stop_all()
+			else:
+				var instances_running = false
+				for instance in minstance_main.instances:
+					if instance.status == "Running": instances_running = true
+				if not instances_running: minstance_main.stop_all()
 			
 func get_remote_obj(id) -> MinstanceRemote:
 	if not remote_objs.has(id):
