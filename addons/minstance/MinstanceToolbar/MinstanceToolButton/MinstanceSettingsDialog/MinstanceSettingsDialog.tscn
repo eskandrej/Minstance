@@ -20,8 +20,9 @@ border_width_bottom = 1
 border_color = Color( 0.235294, 0.225882, 0.207059, 1 )
 
 [node name="WindowDialog" type="WindowDialog"]
+visible = true
 margin_right = 516.0
-margin_bottom = 40.0
+margin_bottom = 566.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 popup_exclusive = true
@@ -38,18 +39,18 @@ custom_constants/separation = 10
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
 margin_right = 495.0
-margin_bottom = 498.0
+margin_bottom = 526.0
 custom_styles/panel = SubResource( 11 )
 
 [node name="BackgroundColorRect" type="ColorRect" parent="VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 margin_right = 495.0
-margin_bottom = 498.0
+margin_bottom = 526.0
 color = Color( 0.133333, 0.14902, 0.196078, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer"]
 margin_right = 495.0
-margin_bottom = 498.0
+margin_bottom = 526.0
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -58,7 +59,7 @@ custom_constants/margin_left = 20
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 475.0
-margin_bottom = 498.0
+margin_bottom = 526.0
 custom_constants/separation = 7
 
 [node name="InstanceHBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
@@ -101,45 +102,47 @@ rect_min_size = Vector2( 0, 2 )
 [node name="MarginContainer" type="CenterContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 margin_top = 215.0
 margin_right = 455.0
-margin_bottom = 461.0
+margin_bottom = 489.0
 
 [node name="OptionsPanel" type="PanelContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
-margin_left = 202.0
-margin_top = 113.0
-margin_right = 252.0
-margin_bottom = 133.0
+margin_left = 77.0
+margin_right = 377.0
+margin_bottom = 274.0
 custom_styles/panel = SubResource( 10 )
 
 [node name="OptionsVBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel"]
 margin_left = 25.0
 margin_top = 10.0
-margin_right = 230.0
-margin_bottom = 236.0
+margin_right = 275.0
+margin_bottom = 264.0
+rect_min_size = Vector2( 250, 0 )
 
 [node name="OptionsLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer"]
-margin_right = 205.0
+margin_right = 250.0
 margin_bottom = 14.0
 text = "Options"
 align = 1
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer"]
 margin_top = 18.0
-margin_right = 205.0
+margin_right = 250.0
 margin_bottom = 22.0
 custom_constants/separation = 4
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer"]
+margin_left = 10.0
 margin_top = 26.0
-margin_right = 205.0
-margin_bottom = 226.0
-size_flags_horizontal = 3
-custom_constants/hseparation = 2
+margin_right = 240.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 230, 0 )
+size_flags_horizontal = 4
+custom_constants/hseparation = 8
 columns = 2
 
 [node name="DebuggerPortLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 margin_top = 5.0
-margin_right = 127.0
+margin_right = 146.0
 margin_bottom = 19.0
 size_flags_horizontal = 3
 text = "Debugger port:"
@@ -147,50 +150,69 @@ align = 2
 
 [node name="DebbugerPortTextEdit" type="LineEdit" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 unique_name_in_owner = true
-margin_left = 138.0
-margin_right = 196.0
+margin_left = 154.0
+margin_right = 212.0
 margin_bottom = 24.0
-size_flags_horizontal = 4
+size_flags_horizontal = 0
+size_flags_vertical = 0
 max_length = 5
 caret_blink = true
 caret_blink_speed = 0.5
 
+[node name="SpawnTimeLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
+margin_top = 33.0
+margin_right = 146.0
+margin_bottom = 47.0
+text = "Spawn time:"
+align = 2
+valign = 3
+autowrap = true
+
+[node name="SpawnTimeSB" type="SpinBox" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
+unique_name_in_owner = true
+margin_left = 154.0
+margin_top = 28.0
+margin_right = 228.0
+margin_bottom = 52.0
+size_flags_horizontal = 0
+suffix = "s"
+
 [node name="RemeberWinPosLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
-margin_top = 32.0
-margin_right = 127.0
-margin_bottom = 63.0
+margin_top = 60.0
+margin_right = 146.0
+margin_bottom = 91.0
 text = "Remember window 
 position and size:"
 align = 2
 
 [node name="RemeberWinPosCheckBtn" type="CheckButton" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 unique_name_in_owner = true
-margin_left = 129.0
-margin_top = 28.0
-margin_right = 205.0
-margin_bottom = 68.0
-size_flags_horizontal = 4
+margin_left = 154.0
+margin_top = 56.0
+margin_right = 230.0
+margin_bottom = 96.0
+size_flags_horizontal = 0
 
 [node name="SaveBreakpointsLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
-margin_top = 85.0
-margin_right = 127.0
-margin_bottom = 99.0
+margin_top = 113.0
+margin_right = 146.0
+margin_bottom = 127.0
 text = "Save Breakpoints:"
 align = 2
 autowrap = true
 
 [node name="SaveBreakpointsBtn" type="CheckButton" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 unique_name_in_owner = true
-margin_left = 129.0
-margin_top = 72.0
-margin_right = 205.0
-margin_bottom = 112.0
-size_flags_horizontal = 4
+margin_left = 154.0
+margin_top = 100.0
+margin_right = 230.0
+margin_bottom = 140.0
+size_flags_horizontal = 0
 
 [node name="RemoveAutoloadOnExitLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
-margin_top = 120.0
-margin_right = 127.0
-margin_bottom = 151.0
+margin_top = 148.0
+margin_right = 146.0
+margin_bottom = 179.0
 text = "Remove autoload on exit:"
 align = 2
 valign = 3
@@ -198,16 +220,16 @@ autowrap = true
 
 [node name="RemoveAutoloadOnExitBtn" type="CheckButton" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 unique_name_in_owner = true
-margin_left = 129.0
-margin_top = 116.0
-margin_right = 205.0
-margin_bottom = 156.0
-size_flags_horizontal = 4
+margin_left = 154.0
+margin_top = 144.0
+margin_right = 230.0
+margin_bottom = 184.0
+size_flags_horizontal = 0
 
 [node name="CloseAllInstancesOnExitLbl" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
-margin_top = 164.0
-margin_right = 127.0
-margin_bottom = 195.0
+margin_top = 192.0
+margin_right = 146.0
+margin_bottom = 223.0
 text = "Close all instances on exit:"
 align = 2
 valign = 3
@@ -215,31 +237,31 @@ autowrap = true
 
 [node name="CloseAllInstancesOnExitBtn" type="CheckButton" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer/OptionsPanel/OptionsVBoxContainer/GridContainer"]
 unique_name_in_owner = true
-margin_left = 129.0
-margin_top = 160.0
-margin_right = 205.0
-margin_bottom = 200.0
-size_flags_horizontal = 4
+margin_left = 154.0
+margin_top = 188.0
+margin_right = 230.0
+margin_bottom = 228.0
+size_flags_horizontal = 0
 
 [node name="Spacer" type="Control" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
-margin_top = 468.0
+margin_top = 496.0
 margin_right = 455.0
-margin_bottom = 478.0
+margin_bottom = 506.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="CloseBtn" type="Button" parent="VBoxContainer"]
 margin_left = 224.0
-margin_top = 508.0
+margin_top = 536.0
 margin_right = 271.0
-margin_bottom = 528.0
+margin_bottom = 556.0
 size_flags_horizontal = 4
 size_flags_vertical = 10
 text = "Close"
 
 [node name="Spacer" type="Control" parent="VBoxContainer"]
-margin_top = 538.0
+margin_top = 566.0
 margin_right = 495.0
-margin_bottom = 538.0
+margin_bottom = 566.0
 
 [connection signal="popup_hide" from="." to="." method="_on_WindowDialog_popup_hide"]
 [connection signal="resized" from="VBoxContainer" to="." method="_on_VBoxContainer_resized"]

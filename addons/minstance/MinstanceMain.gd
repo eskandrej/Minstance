@@ -26,6 +26,7 @@ var remember_window_position_size = true
 var remove_autoload_on_exit = true
 var close_all_instances_on_exit = true
 var debugger_port = 4567
+var spawn_time = 0
 
 enum STATUS {NONE, STARTED, STOPPED, STOPPING}
 var status = STATUS.NONE setget set_status
@@ -117,6 +118,7 @@ func start() -> void:
 		instance.save_window = remember_window_position_size
 		instance.port = debugger_port + instances.find(instance)
 		instance.start_app()
+		yield(get_tree().create_timer(spawn_time),"timeout")
 		
 	self.status = STATUS.STARTED
 	
@@ -132,6 +134,7 @@ func save_config() -> void:
 	config.set_value("Configuration","remove_autoload_on_exit", remove_autoload_on_exit)
 	config.set_value("Configuration","remember_window_position_size", remember_window_position_size)
 	config.set_value("Configuration","close_all_instances_on_exit", close_all_instances_on_exit)
+	config.set_value("Configuration", "spawn_time", spawn_time)
 	
 	for instance in instances:
 		if save_breakpoints: config.set_value("Breakpoints", instance.id, instance.breakpoints.data)
@@ -153,6 +156,7 @@ func load_config() -> void:
 	remember_window_position_size = config.get_value("Configuration", "remember_window_position_size", remember_window_position_size)
 	remove_autoload_on_exit = config.get_value("Configuration","remove_autoload_on_exit", remove_autoload_on_exit)
 	close_all_instances_on_exit = config.get_value("Configuration","close_all_instances_on_exit", close_all_instances_on_exit)
+	spawn_time = config.get_value("Configuration", "spawn_time", spawn_time)
 	
 	if config.has_section("Instances"):
 		for instance_id in config.get_section_keys("Instances"):
