@@ -18,7 +18,7 @@ const _properties = [
 					]
 var _values = {}
 
-var _tcp_server: TCP_Server
+var _tcp_server: TCPServer
 var _connection: StreamPeerTCP
 
 var _autoload_id: int
@@ -72,7 +72,7 @@ func _init(name, color, arguments, window_position, window_size) -> void:
 	id = "%02x-%02x-%02x" % [randi(),randi(),randi()]
 	
 	icon = Util.color_texture(self.color, Vector2(10,10))
-	_tcp_server = TCP_Server.new()
+	_tcp_server = TCPServer.new()
 	breakpoints = Breakpoints.new()
 	
 func start_debug_server() -> void:
@@ -85,7 +85,7 @@ func start_app() -> void:
 	start_debug_server()
 	
 	var autoload_arguments = self.arguments + \
-	" --minstance-id %s --minstance-color %s --minstance-save-window %s --minstance-config-path %s" % [id, self.color.to_html(), var2str(self.save_window), self.config_path]
+	" --minstance-id %s --minstance-color %s --minstance-save-window %s --minstance-config-path %s" % [id, self.color.to_html(), var_to_str(self.save_window), self.config_path]
 	
 	OS.execute(OS.get_executable_path(), [
 				"--position", "%d,%d" % [self.window_position.x, self.window_position.y],
@@ -94,7 +94,7 @@ func start_app() -> void:
 				"--allow_focus_steal_pid", OS.get_process_id(),
 				"--breakpoints", self.breakpoints,
 				autoload_arguments
-			], false)
+			])
 
 	self.status = "Running"
 
@@ -129,9 +129,9 @@ func _process (delta) -> void:
 					"debug_enter":
 						if data: self.debug_msg = data[1]
 						minstance_main.set_instances_sticky(false)
-						yield(get_tree(),"idle_frame")
-						OS.set_window_always_on_top(true)
-						OS.set_window_always_on_top(false)
+						await get_tree().process_frame
+						DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+						DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, false)
 						get_stack_dump()
 						
 					"message:scene_tree":
@@ -190,7 +190,7 @@ func stop() -> void:
 	if _connection:
 		if self.status == "Break":
 			continue_ex()
-		yield(async_call_autoload_function("quit"), "completed")
+		await async_call_autoload_function("quit")
 
 	self.status = "Inactive"
 
@@ -198,8 +198,7 @@ func stop() -> void:
 		remote_obj.free()
 	remote_objs.clear()
 	_autoload_id = 0
-	
-	yield(get_tree(),"idle_frame")
+	await get_tree().process_frame
 	clear_connection()
 
 func continue_ex() -> void:
@@ -208,15 +207,15 @@ func continue_ex() -> void:
 	self.stack.clear()
 	self.status = "Running"
 	
-func async_call_autoload_function(function_name:String) -> GDScriptFunctionState:
+func async_call_autoload_function(function_name:String):
 	if not _autoload_id:
 		request_scene_tree()
-		yield(get_tree(),"idle_frame")
+		await get_tree().process_frame
 		async_call_autoload_function(function_name)
 	else:
 		set_object_property(_autoload_id, function_name, true)
 		
-	return yield()
+	return await get_tree().process_frame
 	
 func set_focus() -> void:
 	async_call_autoload_function("focus")
@@ -274,7 +273,7 @@ class Breakpoints:
 			
 	func set_script_bp(p_script_path:String, p_breakpoints:Array) -> void:
 		data[p_script_path] = p_breakpoints
-		if p_breakpoints.empty():
+		if p_breakpoints.is_empty():
 			remove_script_bp(p_script_path)
 		
 	func remove_script_bp(p_script_path:String) -> void:
@@ -287,7 +286,7 @@ class Breakpoints:
 			for line in data[script_path]:
 				output += "%s:%d," % [script_path, line + 1]
 		
-		if output.empty():
+		if output.is_empty():
 			output = " " 	# Added for convenience, so that we don't need to check if its empty when adding to argument
 							# without whitespace it would go to next argument
 		else:

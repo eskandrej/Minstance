@@ -1,4 +1,4 @@
-tool
+@tool
 extends HBoxContainer
 
 const MinstanceOutputScene = preload("MinstanceOutput/MinstanceOutputScene.tscn")

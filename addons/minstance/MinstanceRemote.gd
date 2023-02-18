@@ -13,7 +13,7 @@ func _get_property_list() -> Array:
 	
 func _init(p_instance, p_remote_data:Array = []) -> void:
 	instance = p_instance
-	if not p_remote_data.empty(): set_remote_data(p_remote_data)
+	if not p_remote_data.is_empty(): set_remote_data(p_remote_data)
 	
 func set_remote_data(p_remote_data:Array) -> void:
 	var old_prop = __properties
@@ -60,14 +60,14 @@ func set_remote_data(p_remote_data:Array) -> void:
 		if not dic.name == "script":
 			__remote_properties.append(dic)
 
-	if needs_update: property_list_changed_notify()
+	if needs_update: notify_property_list_changed()
 
-func _get(property: String):
+func _get(property):
 	if __properties.has(property):
 		return __properties[property]
 	return
 	
-func _set(property: String, value) -> bool:
+func _set(property, value) -> bool:
 	if not __properties.has(property):
 		return false
 

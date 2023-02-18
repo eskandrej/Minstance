@@ -1,4 +1,4 @@
-tool
+@tool
 extends Tree
 
 const Util = preload("res://addons/minstance/Util.gd")
@@ -18,29 +18,29 @@ func _on_instance_data_changed(properties: Dictionary, instance: Instance) -> vo
 	if properties.has("status"):
 		items[instance].set_text(1, properties.status)
 		if properties.status == "Running":
-			items[instance].set_custom_color(1, Color.green)
+			items[instance].set_custom_color(1, Color.GREEN)
 		elif properties.status == "Break":
-			items[instance].set_custom_color(1, Color.red)
+			items[instance].set_custom_color(1, Color.RED)
 		
 func add_instance(instance: Instance) -> void:
-	instance.connect("data_changed", self, "_on_instance_data_changed",[instance])
+	instance.data_changed.connect(_on_instance_data_changed.bind(instance))
 	var child = create_item(root)
 	child.set_text(0, instance.name)
 	child.set_text(1, instance.status)
 	if instance.status == "Running":
-		child.set_custom_color(1, Color.green)
-		get_parent().debug_buttons.continue.visible = false
+		child.set_custom_color(1, Color.GREEN)
+		get_parent().debug_buttons.get_continue.visible = false
 	elif instance.status == "Break":
-		child.set_custom_color(1, Color.red)
-		get_parent().debug_buttons.continue.visible = true
+		child.set_custom_color(1, Color.RED)
+		get_parent().debug_buttons.get_continue.visible = true
 	child.set_icon(0, Util.color_texture(instance.color, Vector2(10,10)))
-	child.set_text_align(1, TreeItem.ALIGN_CENTER)
+	child.set_text_align(1, HORIZONTAL_ALIGNMENT_CENTER)
 	child.set_metadata(0,instance)
 	items[instance] = child
 	
 func remove_instance(instance: Instance) -> void:
 	root.remove_child(items[instance])
-	update()
+	queue_redraw()
 	items.erase(instance)
 
 func initialize(p_minstance_main) -> void:

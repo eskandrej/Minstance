@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 
 const MinstanceDebugPanelScene = preload("MinstanceDebugPanelScene.tscn")
@@ -27,26 +27,27 @@ enum BUTTONS_TYPE {ORGINAL, MINSTANCE}
 
 var enabled = false
 
-func _on_breakpoint_reached(data, p_instance: Instance) -> void:
+func _on_breakpoint_reached(data, p_instance: Instance):
 	minstance_main.active_instance = p_instance
 	minstance_main.make_bottom_panel_item_visible(minstance_main.script_editor_debugger)
+	
 
-func _on_instance_data_changed(property, instance) -> void:
+func _on_instance_data_changed(property, instance):
 	if enabled:
 		if property.has("status"):
 			if property.status == "Running":
-				debug_buttons.continue.disabled = true
+				debug_buttons.get_continue.disabled = true
 				debug_buttons.step_over.disabled = true
 				debug_buttons.step_into.disabled = true
-				debug_buttons.break.disabled = false
+				debug_buttons.get_break.disabled = false
 				error_lbl.text = ""
 				
 				minstance_stack_variables.clear()
 				minstance_stack_frames.clear()
 				
 			if property.status == "Break":
-				debug_buttons.continue.disabled = false
-				debug_buttons.break.disabled = true
+				debug_buttons.get_continue.disabled = false
+				debug_buttons.get_break.disabled = true
 				debug_buttons.step_over.disabled = false
 				debug_buttons.step_into.disabled = false
 		
@@ -65,8 +66,8 @@ func _on_instance_data_changed(property, instance) -> void:
 
 func add_instance(p_instance: Instance) -> void:
 	minstance_status_list.add_instance(p_instance)
-	p_instance.connect("breakpoint_reached", self, "_on_breakpoint_reached", [p_instance])
-	p_instance.connect("data_changed", self, "_on_instance_data_changed", [p_instance])
+	p_instance.connect("breakpoint_reached", _on_breakpoint_reached.bind(p_instance))
+	p_instance.connect("data_changed", _on_instance_data_changed.bind(p_instance))
 	
 func remove_instance(p_instance: Instance) -> void:
 	minstance_status_list.remove_instance(p_instance)
@@ -159,7 +160,7 @@ func _init(p_minstance_main) -> void:
 	
 	bring_to_front_btn = Button.new()
 	bring_to_front_btn.text = "Bring to front instances"
-	bring_to_front_btn.connect("pressed", self, "_on_bring_to_front_btn_pressed")
+	bring_to_front_btn.connect("pressed", _on_bring_to_front_btn_pressed())
 	bring_to_front_btn.visible = false
 	vbox.get_child(0).add_child(bring_to_front_btn)
 	
@@ -174,7 +175,7 @@ func _init(p_minstance_main) -> void:
 	sticky_btn.texture_normal = theme.get_icon("Unlock", "EditorIcons")
 	sticky_btn.texture_pressed = theme.get_icon("Lock", "EditorIcons")
 
-	sticky_btn.connect("pressed",self,"_on_sticky_pressed")
+	sticky_btn.connect("pressed" ,_on_sticky_pressed())
 	vbox.get_child(0).add_child(sticky_btn)
 	
 
@@ -198,7 +199,7 @@ func _init(p_minstance_main) -> void:
 func _on_sticky_pressed():
 	minstance_main.set_instances_sticky(sticky_btn.pressed)
 	
-func _on_bring_to_front_btn_pressed() -> void:
+func _on_bring_to_front_btn_pressed():
 	minstance_main.bring_instances_to_front()
 	
 func delete() -> void:
