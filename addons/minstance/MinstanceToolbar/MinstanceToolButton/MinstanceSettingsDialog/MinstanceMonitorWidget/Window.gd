@@ -1,4 +1,4 @@
-tool
+@tool
 extends Panel
 
 var instance
@@ -7,7 +7,7 @@ signal active
 signal selected
 signal deselected
 
-var color setget set_color
+var color : set = set_color
 
 
 func set_color(p_color):

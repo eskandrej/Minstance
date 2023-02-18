@@ -1,4 +1,4 @@
-tool
+@tool
 extends EditorPlugin
 
 const MinstanceScriptEditor = preload("MinstanceScriptEditor/MinstanceScriptEditor.gd")
@@ -17,8 +17,8 @@ var script_editor_debugger:Control
 
 const MINSTANCE_CONFIG_PATH = "res://minstance_data.cfg"
 var instances: Array
-var active_instance = null setget set_active_instance
-var inspected_object = null setget set_inspected_object
+var active_instance = null : set = set_active_instance
+var inspected_object = null : set = set_inspected_object
 var config: ConfigFile
 
 var save_breakpoints = true
@@ -29,7 +29,7 @@ var debugger_port = 4567
 var spawn_time = 0
 
 enum STATUS {NONE, STARTED, STOPPED, STOPPING}
-var status = STATUS.NONE setget set_status
+var status = STATUS.NONE : set = set_status
 var object_id_selected_connection: Dictionary
 
 signal active_instance_changed(instance)
@@ -38,7 +38,7 @@ signal status_changed(status)
 func _enter_tree() -> void:
 	script_editor_debugger = get_script_editor_debugger()
 	
-	minstance_script_editor = MinstanceScriptEditor.new(self)
+	minstance_script_editor = await MinstanceScriptEditor.new(self)
 	minstance_debug_panel = MinstanceDebugPanel.new(self)
 	minstance_toolbar = MinstanceToolbar.new(self)
 	minstance_outputs = MinstanceOutputs.new(self)
@@ -56,7 +56,7 @@ func stop_all() -> void:
 	self.inspected_object = null
 
 	for instance in instances:	
-		yield(get_tree(),"idle_frame") # wait a little to avoid writting file at a same time
+		await get_tree().process_frame # wait a little to avoid writting file at a same time
 		instance.stop()
 
 	if remove_autoload_on_exit:
@@ -65,8 +65,8 @@ func stop_all() -> void:
 		
 	self.status = STATUS.STOPPED
 	
-	get_editor_interface().get_inspector().connect(object_id_selected_connection.signal, object_id_selected_connection.target, object_id_selected_connection.method)
-	get_editor_interface().get_inspector().disconnect("object_id_selected", self, "_on_object_id_selected")
+	get_editor_interface().get_inspector().connect(object_id_selected_connection.get_signal, object_id_selected_connection.target, object_id_selected_connection.method)
+	get_editor_interface().get_inspector().disconnect("object_id_selected", _on_object_id_selected)
 	
 func set_inspected_object(p_inspected_object: MinstanceRemote) -> void:
 	inspected_object = p_inspected_object
@@ -95,7 +95,7 @@ func _on_object_id_selected(id):
 	self.inspected_object = object
 
 func start() -> void:
-	if instances.empty(): 
+	if instances.is_empty(): 
 		minstance_toolbar.instruction_popup.popup_centered()
 		return
 		
@@ -118,13 +118,13 @@ func start() -> void:
 		instance.save_window = remember_window_position_size
 		instance.port = debugger_port + instances.find(instance)
 		instance.start_app()
-		yield(get_tree().create_timer(spawn_time),"timeout")
+		await get_tree().create_timer(spawn_time).timeout
 		
 	self.status = STATUS.STARTED
 	
 	object_id_selected_connection = get_editor_interface().get_inspector().get_signal_connection_list("object_id_selected")[0]
-	get_editor_interface().get_inspector().disconnect(object_id_selected_connection.signal, object_id_selected_connection.target, object_id_selected_connection.method)
-	get_editor_interface().get_inspector().connect("object_id_selected", self, "_on_object_id_selected")
+	get_editor_interface().get_inspector().disconnect(object_id_selected_connection.get_signal, object_id_selected_connection.target.method)
+	get_editor_interface().get_inspector().connect("object_id_selected", _on_object_id_selected)
 	
 func save_config() -> void:
 	config.clear()
@@ -206,7 +206,7 @@ func bring_instances_to_front() -> void:
 		instance.set_focus()
 		
 func set_instances_sticky(enable: bool) -> void:
-	minstance_debug_panel.sticky_btn.pressed = enable
+	minstance_debug_panel.sticky_btn.button_pressed = enable
 	for instance in instances:
 		instance.set_sticky(enable)
 

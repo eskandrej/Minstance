@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-var focus:bool setget set_focused
-var quit:bool setget set_quit
+var focus :bool : set = set_focused
+var quit : bool : set = set_quit
 var sticky:bool = false
 
 var _kill:bool = false
@@ -27,11 +27,11 @@ func _exit_tree() -> void:
 	if not _kill: _save_window_position()
 
 func _save_window_position() -> void:
-	var save_window = str2var(get_minstance_value_from_args("--minstance-save-window")) # using str2var because value is bool
+	var save_window = str_to_var(get_minstance_value_from_args("--minstance-save-window")) # using str2var because value is bool
 	
 	# There is a bug when exiting program that is still paused on breakpoint. 
 	# After it is terminated it will have empty window_size so if it happens we are skipping saving that
-	if not save_window or OS.window_size == Vector2(0,0): return 
+	if not save_window or DisplayServer.window_get_size() == Vector2i(0,0): return 
 	
 	var minstace_config_path = get_minstance_value_from_args("--minstance-config-path")
 	var minstance_id = get_minstance_value_from_args("--minstance-id")
@@ -40,8 +40,8 @@ func _save_window_position() -> void:
 	config.load(minstace_config_path)
 
 	var instance = config.get_value("Instances", minstance_id)
-	instance.window_position = OS.window_position
-	instance.window_size = OS.window_size
+	instance.window_position = DisplayServer.window_get_position()
+	instance.window_size = DisplayServer.window_get_size()
 	
 	config.set_value("Instances", minstance_id, instance)
 	config.save(minstace_config_path)
@@ -52,6 +52,6 @@ func set_quit(p_value) -> void:
 func set_focused(p_value) -> void:
 	# OS.move_window_to_foreground() will not bring window to front on Windows
 	# if its called from background so using this workaround
-	OS.set_window_always_on_top(true)
-	if not sticky: OS.set_window_always_on_top(false)
+	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, true)
+	if not sticky: DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_ALWAYS_ON_TOP, false)
 	

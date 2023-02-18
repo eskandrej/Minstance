@@ -1,4 +1,4 @@
-tool
+@tool
 extends Tree
 
 var root: TreeItem
@@ -10,7 +10,7 @@ func initialize(p_minstance_main) -> void:
 	editor_theme = minstance_main.get_editor_interface().get_base_control().theme
 	
 func clear() -> void:
-	.clear()
+	super()
 	root = create_item()
 	
 func _on_tree_cell_selected() -> void:
@@ -41,11 +41,11 @@ func item_pressed(item: TreeItem) -> void:
 			title_item.set_metadata(0, column)
 			
 			if column > 0:
-				item.set_custom_color(column, Color.green)
-				title_item.set_custom_bg_color(1, Color.darkgreen)
+				item.set_custom_color(column, Color.GREEN)
+				title_item.set_custom_bg_color(1, Color.DARK_GREEN)
 			else:
-				item.set_custom_color(column, Color.blue)
-				title_item.set_custom_bg_color(1, Color.darkblue)
+				item.set_custom_color(column, Color.BLUE)
+				title_item.set_custom_bg_color(1, Color.DARK_BLUE)
 			
 			if data is Dictionary: 
 				title_item.set_text(0, "Key")
@@ -92,7 +92,7 @@ func new_item(columns_data:Array, parent: TreeItem) -> void:
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == 1:
-			yield(get_tree(),"idle_frame")
+			await get_tree().process_frame
 			var item = get_item_at_position(event.position)
 			if item:
 				item_pressed(item)
@@ -113,8 +113,8 @@ func set_data(stack_variables) -> void:
 			child_p.set_text(0, " " + titles[num_title])
 			child_p.set_selectable(0,false)
 			child_p.set_selectable(1,false)
-			child_p.set_custom_bg_color(0, Color.black)
-			child_p.set_custom_bg_color(1, Color.black)
+			child_p.set_custom_bg_color(0, Color.BLACK)
+			child_p.set_custom_bg_color(1, Color.BLACK)
 		num_title += 1
 		
 		for i in size:

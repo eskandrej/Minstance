@@ -1,8 +1,8 @@
-tool
+@tool
 extends VBoxContainer
 
-onready var color_rect = $ColorRect
-onready var _log = $Log
+@onready var color_rect = $ColorRect
+@onready var _log = $Log
 
 
 enum {MSG_TYPE_STD, MSG_TYPE_ERROR}
@@ -14,19 +14,19 @@ var warning_icon: Texture
 var message_color: Color
 
 
-var instance setget set_instance
+var instance : set = set_instance
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_THEME_CHANGED:
-		yield(self, "ready")
-		_log.add_font_override("normal_font", get_font("output_source", "EditorFonts"))
-		_log.add_color_override("selection_color", get_color("accent_color", "Editor") * Color(1, 1, 1, 0.4))
+		await ready
+		_log.add_font_override("normal_font", get_theme_font("output_source", "EditorFonts"))
+		_log.add_color_override("selection_color", get_theme_color("accent_color", "Editor") * Color(1, 1, 1, 0.4))
 
-		error_color = get_color("error_color", "Editor");
-		error_icon = get_icon("Error", "EditorIcons");
-		warning_color = get_color("warning_color", "Editor");
-		warning_icon = get_icon("Warning", "EditorIcons");
-		message_color = get_color("font_color", "Editor") * Color(1, 1, 1, 0.6);
+		error_color = get_theme_color("error_color", "Editor");
+		error_icon = get_theme_icon("Error", "EditorIcons");
+		warning_color = get_theme_color("warning_color", "Editor");
+		warning_icon = get_theme_icon("Warning", "EditorIcons");
+		message_color = get_theme_color("font_color", "Editor") * Color(1, 1, 1, 0.6);
 
 func set_instance(p_instance) -> void:
 	instance = p_instance
@@ -55,4 +55,4 @@ func _on_ClearBtn_pressed() -> void:
 	clear()
 
 func _on_CopyBtn_pressed() -> void:
-	OS.clipboard = _log.get_selected_text()
+	DisplayServer.clipboard_set(_log.get_selected_text())

@@ -1,4 +1,4 @@
-tool
+@tool
 extends Tree
 
 var root: TreeItem
@@ -19,11 +19,11 @@ func set_data(stack_data) -> void:
 		child.set_metadata(0, stack)
 		child.set_text(0, "%s - %s:%s - at function: %s" % [idx, stack.file,stack.line,stack.function])
 	
-	if root.get_children(): root.get_children().select(0)
+	if root.get_children(): root.get_children()[0]
 
 func clear() -> void:
 	deselect()
-	.clear()
+	super()
 	root = create_item()
 	
 func deselect() -> void:

@@ -42,7 +42,7 @@ func _init(p_minstance_main) -> void:
 	tab_container_stylebox.border_width_right = 2
 	
 	update_opened_scripts() # This will update already opened scripts
-	yield(ProjectSettings, "project_settings_changed") # wait for scirpts to update
+	await ProjectSettings.property_list_changed # wait for scirpts to update
 
 
 func _on_active_instance_changed(instance) -> void:
@@ -66,19 +66,18 @@ func _on_editor_script_closed(script) -> void:
 func _on_editor_script_changed(script) -> void:
 	if not script or scripts.has(script): return
 	
-	 # on startup godot will not create text editor until script is opened so this line will force it
+	# on startup godot will not create text editor until script is opened so this line will force it
 	editor_interface.edit_script(script)
 	
 	var script_text_editor = tab_container.get_current_tab_control()
 	var text_editor = script_text_editor.get_child(0).get_child(0).get_child(0)
 
 	scripts[script] = {"text_editor": text_editor}
-	
-	if not text_editor.is_connected("breakpoint_toggled", self, "_breakpoint_toggled"):
-		text_editor.connect("breakpoint_toggled", self, "_breakpoint_toggled", [text_editor])
+	if not text_editor.is_connected("breakpoint_toggled", _breakpoint_toggled):
+		text_editor.connect("breakpoint_toggled", _breakpoint_toggled.bind(text_editor))
 		
-	if not text_editor.is_connected("text_changed", self, "update_breakpoints"):
-		text_editor.connect("text_changed", self, "update_breakpoints", [text_editor])
+	if not text_editor.is_connected("text_changed", update_breakpoints):		
+		text_editor.text_changed.connect(update_breakpoints.bind(text_editor))
 
 func update_opened_scripts() -> void:
 	var current_tab = tab_container.current_tab

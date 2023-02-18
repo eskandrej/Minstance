@@ -1,9 +1,9 @@
-tool
-extends WindowDialog
+@tool
+extends Window
 
 const tab_instance = preload("TabInstance.tscn")
 var minstance_main = null
-var predef_colors = [Color.red, Color.aquamarine, Color.yellow]
+var predef_colors = [Color.RED, Color.AQUAMARINE, Color.YELLOW]
 var windows = {}
 
 func _on_CloseBtn_pressed():
@@ -58,7 +58,7 @@ func _on_DeleteInstBtn_pressed():
 	tab_to_delete.queue_free()
 
 func popup_centered(pos = Vector2()):
-	.popup_centered()
+	super(popup_centered(pos))
 	$"%AddNewInstBtn".grab_focus()
 	minstance_main.update_window_size_position()
 	
@@ -70,7 +70,7 @@ func popup_centered(pos = Vector2()):
 	$"%SpawnTimeSB".value = minstance_main.spawn_time 
 	
 func _on_VBoxContainer_resized():
-	rect_size.y = $VBoxContainer.rect_size.y
+	size.y = $VBoxContainer.size.y
 
 
 func _on_WindowDialog_popup_hide():

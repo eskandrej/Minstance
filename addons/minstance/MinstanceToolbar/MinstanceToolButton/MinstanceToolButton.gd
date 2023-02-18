@@ -1,15 +1,15 @@
-tool
+@tool
 extends Button
 
-onready var popup_panel = $PopupMenu
-onready var minstance_settings_dialog = $MinstanceSettingsDialog
+@onready var popup_panel = $PopupMenu
+@onready var minstance_settings_dialog = $MinstanceSettingsDialog
 
 var minstance_main = null
 
-var colors = [Color.coral]
+var colors = [Color.CORAL]
 
 func _ready() -> void:
-	popup_panel.connect("id_pressed", self, "_on_popup_item_pressed")
+	popup_panel.connect("id_pressed", _on_popup_item_pressed)
 
 func _on_minstance_status_changed(status:int) -> void:
 	if status == minstance_main.STATUS.STARTED:
@@ -31,10 +31,10 @@ func _on_Control_gui_input(event) -> void:
 	if not disabled:
 		if event is InputEventMouseButton and event.pressed:
 			match event.button_index:
-				BUTTON_LEFT:
+				MOUSE_BUTTON_LEFT:
 					minstance_main.start()
 					event.pressed = false
 					
-				BUTTON_RIGHT:
+				MOUSE_BUTTON_RIGHT:
 					popup_panel.popup(Rect2(event.global_position, popup_panel.rect_size))
 					event.pressed = false

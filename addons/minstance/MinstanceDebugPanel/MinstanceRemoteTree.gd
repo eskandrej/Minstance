@@ -1,4 +1,4 @@
-tool
+@tool
 extends Tree
 
 var minstance_main = null

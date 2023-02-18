@@ -17,7 +17,7 @@ func parse_begin(object) -> void:
 		label.text = "%s:%s" % [path,object.remote_id]
 		
 	label.add_color_override("font_color", object.instance.color)
-	label.align = Label.ALIGN_CENTER
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.rect_min_size.y = 5
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	vbox.add_child(label)
@@ -36,7 +36,7 @@ func parse_property(object, type, path, hint, hint_text, usage) -> bool:
 	
 	var p_object = null
 	if object: p_object = object.get(path)
-	 
+	
 #	if p_object is MinstanceRemote:
 #		var e = EditorProperty.new()
 #		var b = Button.new()

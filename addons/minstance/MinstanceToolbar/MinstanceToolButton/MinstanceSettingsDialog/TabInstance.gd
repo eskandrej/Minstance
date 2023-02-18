@@ -1,7 +1,7 @@
-tool
+@tool
 extends VBoxContainer
 
-var instance setget set_instance
+var instance : set = set_instance
 
 func set_instance(p_instance) -> void:
 	instance = p_instance

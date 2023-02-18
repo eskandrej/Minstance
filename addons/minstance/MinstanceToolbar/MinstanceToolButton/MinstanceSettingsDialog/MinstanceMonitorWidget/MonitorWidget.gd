@@ -1,7 +1,7 @@
-tool
+@tool
 extends Control
 
-const Window = preload("Window.tscn")
+const PreloadedWindow = preload("Window.tscn")
 
 var windows = []
 var selected_window = null
@@ -9,27 +9,27 @@ var offset_position = null
 
 var factor_screen_widget
 
-onready var monitor_screen = $MonitorScreen
-onready var monitor_border = $MonitorBorder
-onready var monitor_stand = $MonitorStand
+@onready var monitor_screen = $MonitorScreen
+@onready var monitor_border = $MonitorBorder
+@onready var monitor_stand = $MonitorStand
 
 func _ready():
-	var ratio = OS.get_screen_size().x / OS.get_screen_size().y
+	var ratio = DisplayServer.screen_get_size().x / DisplayServer.screen_get_size().y
 
-	monitor_screen.rect_size.x =  monitor_screen.rect_size.y * ratio
-	monitor_border.rect_size = monitor_screen.rect_size + Vector2(2,2)
+	monitor_screen.size.x =  monitor_screen.size.y * ratio
+	monitor_border.size = monitor_screen.size + Vector2(2,2)
 	
-	var x = monitor_screen.rect_position.x + monitor_screen.rect_size.x / 2
-	var y = monitor_screen.rect_position.y +  monitor_screen.rect_size.y - 10
-	monitor_stand.rect_position = Vector2(x, y)
-	factor_screen_widget = OS.get_screen_size().x / monitor_screen.rect_size.x
+	var x = monitor_screen.position.x + monitor_screen.size.x / 2
+	var y = monitor_screen.position.y +  monitor_screen.size.y - 10
+	monitor_stand.position = Vector2(x, y)
+	factor_screen_widget = DisplayServer.screen_get_size().x / monitor_screen.size.x
 
 func remove_window(window):
 	windows.erase(window)
 	window.queue_free()
 	
 func add_window(instance):
-	var new_window = Window.instance()
+	var new_window = PreloadedWindow.instance()
 	new_window.instance = instance
 	monitor_screen.add_child(new_window)	
 	new_window.color = instance.color
